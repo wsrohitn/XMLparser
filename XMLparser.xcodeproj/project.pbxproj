@@ -14,6 +14,7 @@
 		C71133AA1C8ED8220099C7BC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C71133A81C8ED8220099C7BC /* LaunchScreen.storyboard */; };
 		C71133B51C8ED8220099C7BC /* XMLparserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C71133B41C8ED8220099C7BC /* XMLparserTests.swift */; };
 		C71133C01C8F18680099C7BC /* CurrencyPickerTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C71133BF1C8F18680099C7BC /* CurrencyPickerTVC.swift */; };
+		C71133C21C8F24CA0099C7BC /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = C71133C11C8F24CA0099C7BC /* Preferences.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,6 +39,7 @@
 		C71133B41C8ED8220099C7BC /* XMLparserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XMLparserTests.swift; sourceTree = "<group>"; };
 		C71133B61C8ED8220099C7BC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C71133BF1C8F18680099C7BC /* CurrencyPickerTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrencyPickerTVC.swift; sourceTree = "<group>"; };
+		C71133C11C8F24CA0099C7BC /* Preferences.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Preferences.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,6 +88,7 @@
 				C71133A81C8ED8220099C7BC /* LaunchScreen.storyboard */,
 				C71133AB1C8ED8220099C7BC /* Info.plist */,
 				C71133BF1C8F18680099C7BC /* CurrencyPickerTVC.swift */,
+				C71133C11C8F24CA0099C7BC /* Preferences.swift */,
 			);
 			path = XMLparser;
 			sourceTree = "<group>";
@@ -202,6 +205,7 @@
 			files = (
 				C71133A21C8ED8220099C7BC /* ViewController.swift in Sources */,
 				C71133A01C8ED8220099C7BC /* AppDelegate.swift in Sources */,
+				C71133C21C8F24CA0099C7BC /* Preferences.swift in Sources */,
 				C71133C01C8F18680099C7BC /* CurrencyPickerTVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

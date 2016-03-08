@@ -16,13 +16,39 @@ protocol CurrencyPickerParent {
     
     func setSelectedCurrency(currency : String)
 }
-class ViewController: UIViewController, NSXMLParserDelegate, UITableViewDataSource, CurrencyPickerParent {
 
+class ViewController: UIViewController, NSXMLParserDelegate, UITableViewDataSource, UITableViewDelegate, CurrencyPickerParent {
+
+    var favourites = [String]()
+    var xmlParser : NSXMLParser?
+    var currentKey = ""
+    var baseCurrency = "GBP"
+    var currencyList = [String]()
+    var currentItem: exchangeRateItem?
+    var myItems = [exchangeRateItem]()
+    var myFavourites = [exchangeRateItem]()
+    
+    class exchangeRateItem {
+        var targetCurrency = ""
+        var exchangeRate = ""
+    }
+    
     override func viewDidLoad() {
-        print("hello world")
+        self.navigationController?.navigationBar.translucent = false
         super.viewDidLoad()
+        
+        baseCurrency = Preferences.readString(Preferences.Id.baseCurrency, defaultValue: "USD")
+        let csv = Preferences.readString(Preferences.Id.favourites)
+        
+        for x in csv.componentsSeparatedByString(",") {
+            if x != "" {
+                favourites.append(x)
+            }
+        }
+        
         title = baseCurrency
         tableView.dataSource = self
+        tableView.delegate = self
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Pick", style: .Plain, target: self, action: "pickCurrency")
         
         getRates()
@@ -31,12 +57,14 @@ class ViewController: UIViewController, NSXMLParserDelegate, UITableViewDataSour
     
     func setSelectedCurrency(currency : String) {
         baseCurrency = currency
+        Preferences.writeString(Preferences.Id.baseCurrency, value: baseCurrency)
         getRates()
     }
 
 
     func pickCurrency(){
         print("pick currency")
+        currencyList.sortInPlace()
         CurrencyPickerTVC.loadVC(self.storyboard!, nc: self.navigationController!, parent: self)
         print("new currency selected")
     }
@@ -45,25 +73,83 @@ class ViewController: UIViewController, NSXMLParserDelegate, UITableViewDataSour
         // Dispose of any resources that can be recreated.
     }
     
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 2
+    }
+    
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if section == 0 {
+            return myFavourites.count
+        }
         return myItems.count
+    }
+    
+    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if section == 0 {
+            return "\(myFavourites.count) Favourites"
+        }
+        return "\(myItems.count) Others"
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("RateCell", forIndexPath: indexPath)
-        print(indexPath)
-        let item = myItems[indexPath.row]
-        cell.textLabel?.text = item["targetCurrency"]
-        cell.detailTextLabel?.text = item["exchangeRate"]
+        cell.accessoryType = UITableViewCellAccessoryType.DetailButton
+        let item = getItem(indexPath)
+        cell.textLabel?.text = item.targetCurrency
+        cell.detailTextLabel?.text = item.exchangeRate
         return cell
     }
+    
+    func getItem(indexPath: NSIndexPath) -> exchangeRateItem {
+        if indexPath.section == 0 {
+            return myFavourites[indexPath.row]
+        }
+        return myItems[indexPath.row]
+    }
 
-    var xmlParser : NSXMLParser?
-
+    func tableView(tableView: UITableView, accessoryButtonTappedForRowWithIndexPath indexPath: NSIndexPath) {
+        let item = getItem(indexPath)
+        let currency = item.targetCurrency
+        if let index = favourites.indexOf(currency) {
+            favourites.removeAtIndex(index)
+            removeFavourite(currency)
+        } else {
+            favourites.append(currency)
+            makeFavourite(currency)
+        }
+        
+        print(favourites)
+        Preferences.writeString(Preferences.Id.favourites, value: favourites.joinWithSeparator(","))
+        tableView.reloadData()
+    }
+    
+    func makeFavourite(currency: String) {
+        for index in 0 ..< myItems.count {
+            let item = myItems[index]
+            if item.targetCurrency == currency {
+                myItems.removeAtIndex(index)
+                myFavourites.append(item)
+                return
+            }
+        }
+    }
+    
+    func removeFavourite(currency: String) {
+        for index in 0 ..< myFavourites.count {
+            let item = myFavourites[index]
+            if item.targetCurrency == currency {
+                myFavourites.removeAtIndex(index)
+                myItems.append(item)
+                return
+            }
+        }
+    }
+    
     func getRates() {
         let urlString = NSURL(string: "http://www.floatrates.com/daily/\(baseCurrency).xml")
         let rssUrlRequest:NSURLRequest = NSURLRequest(URL:urlString!)
         myItems = []
+        myFavourites = []
         currencyList = []
         tableView.reloadData()
         let task = NSURLSession.sharedSession().dataTaskWithRequest(rssUrlRequest) {
@@ -85,21 +171,19 @@ class ViewController: UIViewController, NSXMLParserDelegate, UITableViewDataSour
         title = "\(baseCurrency) against \(currencyList.count) currencies"
     }
     
-    var currentKey = ""
-    var baseCurrency = "GBP"
-    var currencyList = [String]()
-    /*class exchangeRateItem {
-        var dict = [String:String]()
-    }*/
+
     
-    var currentItem: [String:String]?
-    var myItems = [[String:String]]()
+//    class exchangeRateItem {
+//        var dict = [String:String]()
+//    }
+    
+
     
     func parser(parser: NSXMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String : String]) {
         
         currentKey = elementName
         if currentKey == "item" {
-            currentItem = [String:String]()
+            currentItem = exchangeRateItem()
         }
         
     }
@@ -109,9 +193,14 @@ class ViewController: UIViewController, NSXMLParserDelegate, UITableViewDataSour
         
         if elementName == "item" {
             if let item = currentItem {
-                myItems.append(item)
-                currencyList.append(item["targetCurrency"]!)
-                print(item["baseCurrency"]!, item["targetCurrency"]!, item["exchangeRate"]!, myItems.count)
+                if favourites.contains(item.targetCurrency) {
+                    myFavourites.append(item)
+                }
+                else {
+                    myItems.append(item)
+                }
+                currencyList.append(item.targetCurrency)
+                print(item.targetCurrency, item.exchangeRate, myItems.count)
                 currentItem = nil
             }
         }
@@ -120,12 +209,13 @@ class ViewController: UIViewController, NSXMLParserDelegate, UITableViewDataSour
     func parser(parser: NSXMLParser, foundCharacters string: String) {
         
         let trimmed = string.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
-        if currentItem != nil {
-            if let _ = currentItem![currentKey]{
-                currentItem![currentKey]! += trimmed
+        if let item = currentItem {
+            if currentKey == "targetCurrency" {
+                item.targetCurrency += trimmed
             }
-            else {
-                currentItem![currentKey] = trimmed
+            
+            if currentKey == "exchangeRate" {
+                item.exchangeRate += trimmed
             }
         }
 //        if var item = currentItem {
