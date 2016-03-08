@@ -167,6 +167,12 @@ class ViewController: UIViewController, NSXMLParserDelegate, UITableViewDataSour
     }
     
     func afterLoad() {
+        myItems.sortInPlace {
+            $0.targetCurrency < $1.targetCurrency
+        }
+        myFavourites.sortInPlace {
+            $0.targetCurrency < $1.targetCurrency
+        }
         tableView.reloadData()
         title = "\(baseCurrency) against \(currencyList.count) currencies"
     }
