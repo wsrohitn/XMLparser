@@ -13,6 +13,7 @@
 		C71133A71C8ED8220099C7BC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C71133A61C8ED8220099C7BC /* Assets.xcassets */; };
 		C71133AA1C8ED8220099C7BC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C71133A81C8ED8220099C7BC /* LaunchScreen.storyboard */; };
 		C71133B51C8ED8220099C7BC /* XMLparserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C71133B41C8ED8220099C7BC /* XMLparserTests.swift */; };
+		C71133C01C8F18680099C7BC /* CurrencyPickerTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C71133BF1C8F18680099C7BC /* CurrencyPickerTVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +37,7 @@
 		C71133B01C8ED8220099C7BC /* XMLparserTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = XMLparserTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C71133B41C8ED8220099C7BC /* XMLparserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XMLparserTests.swift; sourceTree = "<group>"; };
 		C71133B61C8ED8220099C7BC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C71133BF1C8F18680099C7BC /* CurrencyPickerTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrencyPickerTVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,6 +85,7 @@
 				C71133A61C8ED8220099C7BC /* Assets.xcassets */,
 				C71133A81C8ED8220099C7BC /* LaunchScreen.storyboard */,
 				C71133AB1C8ED8220099C7BC /* Info.plist */,
+				C71133BF1C8F18680099C7BC /* CurrencyPickerTVC.swift */,
 			);
 			path = XMLparser;
 			sourceTree = "<group>";
@@ -199,6 +202,7 @@
 			files = (
 				C71133A21C8ED8220099C7BC /* ViewController.swift in Sources */,
 				C71133A01C8ED8220099C7BC /* AppDelegate.swift in Sources */,
+				C71133C01C8F18680099C7BC /* CurrencyPickerTVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
