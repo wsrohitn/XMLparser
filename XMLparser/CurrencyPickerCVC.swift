@@ -26,6 +26,7 @@ class CurrencyPickerCVC: UICollectionViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        //self.navigationController?.navigationBar.translucent = true
     }
     
     override func didReceiveMemoryWarning() {

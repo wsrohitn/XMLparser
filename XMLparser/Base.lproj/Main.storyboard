@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="K0u-tM-66j">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="K0u-tM-66j">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
@@ -58,24 +58,25 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="tei-FM-QCs" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="48Y-lD-YiE"/>
-                            <constraint firstItem="Pa6-Cr-chE" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="4Zc-6c-jfl"/>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="Pa6-Cr-chE" secondAttribute="bottom" id="ERe-5u-Ufu"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="tei-FM-QCs" secondAttribute="trailing" id="Elw-tr-7Tu"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="Pa6-Cr-chE" secondAttribute="trailing" id="McY-eA-8Mw"/>
-                            <constraint firstItem="tei-FM-QCs" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="TUK-9j-wev"/>
-                            <constraint firstItem="Pa6-Cr-chE" firstAttribute="top" secondItem="tei-FM-QCs" secondAttribute="bottom" constant="18" id="ah7-sX-CvK"/>
+                            <constraint firstItem="Pa6-Cr-chE" firstAttribute="top" secondItem="tei-FM-QCs" secondAttribute="bottom" constant="18" id="Hci-94-pyP"/>
+                            <constraint firstItem="Pa6-Cr-chE" firstAttribute="bottom" secondItem="wfy-db-euE" secondAttribute="top" id="ave-iL-qLh"/>
+                            <constraint firstItem="Pa6-Cr-chE" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="dwF-pe-qdw"/>
+                            <constraint firstItem="Pa6-Cr-chE" firstAttribute="leading" secondItem="tei-FM-QCs" secondAttribute="leading" id="mph-LL-xAj"/>
+                            <constraint firstItem="tei-FM-QCs" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="p6Y-r4-uFb"/>
+                            <constraint firstItem="Pa6-Cr-chE" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="s3Z-gq-Tk9"/>
+                            <constraint firstItem="Pa6-Cr-chE" firstAttribute="trailing" secondItem="tei-FM-QCs" secondAttribute="trailing" id="zT0-Pw-Yct"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="VXn-Rl-wt4"/>
                     <connections>
                         <outlet property="myButton" destination="Pa6-Cr-chE" id="zk9-oP-ooq"/>
                         <outlet property="tableView" destination="tei-FM-QCs" id="HOC-J9-OpZ"/>
+                        <segue destination="qfd-vk-qgb" kind="show" identifier="toCurrencyPickerCVC" id="46H-Ah-7Ng"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1268" y="346"/>
+            <point key="canvasLocation" x="1604" y="352"/>
         </scene>
         <!--Currency PickerTVC-->
         <scene sceneID="2Yn-nl-qf4">
@@ -112,7 +113,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ykJ-zX-tIb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1268" y="-330"/>
+            <point key="canvasLocation" x="2080" y="-330"/>
         </scene>
         <!--Currency PickerCVC-->
         <scene sceneID="2Cj-3x-yYq">
@@ -130,7 +131,7 @@
                         </collectionViewFlowLayout>
                         <cells>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CurrencyPickerCell" id="4FP-8X-vtY" customClass="CurrencyPickerCell" customModule="XMLparser" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="68" height="39"/>
+                                <rect key="frame" x="0.0" y="64" width="68" height="39"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                     <rect key="frame" x="0.0" y="0.0" width="68" height="39"/>
@@ -164,7 +165,7 @@
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="EJP-6Q-dfm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="649" y="-330"/>
+            <point key="canvasLocation" x="1309" y="-392"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="IaW-TA-B9R">

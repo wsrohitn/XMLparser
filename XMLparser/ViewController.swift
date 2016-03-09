@@ -15,7 +15,6 @@ protocol CurrencyPickerParent {
         get
     }
     
-    
     func setSelectedCurrency(currency : String)
 }
 
@@ -29,23 +28,31 @@ class ViewController: UIViewController, NSXMLParserDelegate, UITableViewDataSour
     var currentItem: exchangeRateItem?
     var myItems = [exchangeRateItem]()
     var myFavourites = [exchangeRateItem]()
+    var headerFinished = false
+    var header = xmlHeader()
     
     class exchangeRateItem {
         var targetCurrency = ""
         var exchangeRate = ""
     }
     
+    class xmlHeader {
+        var pubDate = ""
+        var lastBuildDate = ""
+        var title = ""
+        var link = ""
+    }
+    
     @IBOutlet weak var myButton: UIButton!
     
     @IBAction func actionButton(sender: UIButton) {
-        UIFuncs.showMessage(self, "hello", "world")
+        UIFuncs.showMessage(self, "Info", "Published Date: \n \(header.pubDate) \n\n URL:\n \(header.link)")
         return
     }
     
     override func viewDidLoad() {
-        self.navigationController?.navigationBar.translucent = false
+       // self.navigationController?.navigationBar.translucent = false
         super.viewDidLoad()
-        
         baseCurrency = Preferences.readString(Preferences.Id.baseCurrency, defaultValue: "USD")
         let csv = Preferences.readString(Preferences.Id.favourites)
         
@@ -55,7 +62,7 @@ class ViewController: UIViewController, NSXMLParserDelegate, UITableViewDataSour
             }
         }
         
-        myButton.setTitle("Click Me", forState: .Normal)
+        myButton.setTitle("Info", forState: .Normal)
         title = baseCurrency
         tableView.dataSource = self
         tableView.delegate = self
@@ -77,9 +84,18 @@ class ViewController: UIViewController, NSXMLParserDelegate, UITableViewDataSour
         //return
         
         currencyList.sortInPlace()
-        CurrencyPickerCVC.loadVC(self.storyboard!, nc: self.navigationController!, parent: self)
+        //CurrencyPickerCVC.loadVC(self.storyboard!, nc: self.navigationController!, parent: self)
+        performSegueWithIdentifier("toCurrencyPickerCVC", sender: self)
         print("new currency selected")
     }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "toCurrencyPickerCVC" {
+            let dvc = segue.destinationViewController as! CurrencyPickerCVC
+            dvc.parent = self
+        }
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -189,21 +205,12 @@ class ViewController: UIViewController, NSXMLParserDelegate, UITableViewDataSour
         title = "\(baseCurrency) against \(currencyList.count) currencies"
     }
     
-
-    
-//    class exchangeRateItem {
-//        var dict = [String:String]()
-//    }
-    
-
-    
     func parser(parser: NSXMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String : String]) {
         
         currentKey = elementName
         if currentKey == "item" {
             currentItem = exchangeRateItem()
         }
-        
     }
     
     @IBOutlet weak var tableView: UITableView!
@@ -236,18 +243,23 @@ class ViewController: UIViewController, NSXMLParserDelegate, UITableViewDataSour
                 item.exchangeRate += trimmed
             }
         }
-//        if var item = currentItem {
-//            if let _ = item[currentKey]{
-//                item[currentKey]! += trimmed
-//            }
-//            else {
-//                item[currentKey] = trimmed
-//            }
-//            print("keys", currentItem!.count, item.count)
-//        }
+        
+        if headerFinished == false {
+            if currentKey == "pubDate" {
+                print("pubdate")
+                header.pubDate += trimmed
+            }
+            if currentKey == "lastBuildDate" {
+                header.lastBuildDate += trimmed
+                headerFinished = true
+            }
+            if currentKey == "link" {
+                header.link += trimmed
+            }
+            if currentKey == "title" {
+                header.title += trimmed
+            }
+        }
     }
-    
-    
-   
 }
 
