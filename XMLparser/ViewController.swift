@@ -15,6 +15,10 @@ protocol CurrencyPickerParent {
         get
     }
     
+    var favourites: [String]{
+        get
+    }
+
     func setSelectedCurrency(currency : String)
 }
 
@@ -78,11 +82,7 @@ class ViewController: UIViewController, NSXMLParserDelegate, UITableViewDataSour
         getRates()
     }
     
-    func pickCurrency(){
-        
-        //UIFuncs.showMessage(self, "hello", "world")
-        //return
-        
+    func pickCurrency(){        
         currencyList.sortInPlace()
         //CurrencyPickerCVC.loadVC(self.storyboard!, nc: self.navigationController!, parent: self)
         performSegueWithIdentifier("toCurrencyPickerCVC", sender: self)

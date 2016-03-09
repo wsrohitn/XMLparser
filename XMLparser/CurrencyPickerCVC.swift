@@ -42,6 +42,9 @@ class CurrencyPickerCVC: UICollectionViewController {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(CurrencyPickerCell.getReuseIdentifier(), forIndexPath: indexPath) as! CurrencyPickerCell
         if let btn = cell.btn {
             btn.setTitle(parent!.currencyList[indexPath.row], forState: .Normal)
+            if parent!.favourites.contains((btn.titleLabel?.text)!) {
+                cell.backgroundColor = UIColor.redColor()
+            }
         }
         return cell
     }
