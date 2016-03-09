@@ -7,12 +7,14 @@
 //
 
 import UIKit
+import WsBase
 
 protocol CurrencyPickerParent {
     
     var currencyList: [String]{
         get
     }
+    
     
     func setSelectedCurrency(currency : String)
 }
@@ -33,6 +35,13 @@ class ViewController: UIViewController, NSXMLParserDelegate, UITableViewDataSour
         var exchangeRate = ""
     }
     
+    @IBOutlet weak var myButton: UIButton!
+    
+    @IBAction func actionButton(sender: UIButton) {
+        UIFuncs.showMessage(self, "hello", "world")
+        return
+    }
+    
     override func viewDidLoad() {
         self.navigationController?.navigationBar.translucent = false
         super.viewDidLoad()
@@ -46,6 +55,7 @@ class ViewController: UIViewController, NSXMLParserDelegate, UITableViewDataSour
             }
         }
         
+        myButton.setTitle("Click Me", forState: .Normal)
         title = baseCurrency
         tableView.dataSource = self
         tableView.delegate = self
@@ -60,12 +70,14 @@ class ViewController: UIViewController, NSXMLParserDelegate, UITableViewDataSour
         Preferences.writeString(Preferences.Id.baseCurrency, value: baseCurrency)
         getRates()
     }
-
-
+    
     func pickCurrency(){
-        print("pick currency")
+        
+        //UIFuncs.showMessage(self, "hello", "world")
+        //return
+        
         currencyList.sortInPlace()
-        CurrencyPickerTVC.loadVC(self.storyboard!, nc: self.navigationController!, parent: self)
+        CurrencyPickerCVC.loadVC(self.storyboard!, nc: self.navigationController!, parent: self)
         print("new currency selected")
     }
     override func didReceiveMemoryWarning() {
