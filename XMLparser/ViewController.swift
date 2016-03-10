@@ -57,6 +57,13 @@ class ViewController: UIViewController, NSXMLParserDelegate, UITableViewDataSour
     override func viewDidLoad() {
        // self.navigationController?.navigationBar.translucent = false
         super.viewDidLoad()
+        
+        
+        //UIBranding.sharedInstance.branding = makeMustang1944()
+        
+        UIBranding.fixView(self.view!)
+        UIBranding.fixTableView(tableView)
+        
         baseCurrency = Preferences.readString(Preferences.Id.baseCurrency, defaultValue: "USD")
         let csv = Preferences.readString(Preferences.Id.favourites)
         
@@ -74,6 +81,31 @@ class ViewController: UIViewController, NSXMLParserDelegate, UITableViewDataSour
         
         getRates()
         // Do any additional setup after loading the view, typically from a nib.
+    }
+    
+    
+    func makeMustang1944() -> WsBranding {
+        let branding = WsBranding()
+        branding.backgroundColor = Funcs.makeColour(38,38,38)
+        branding.backgroundColor2 = Funcs.makeColour(41,49,70)
+        branding.backgroundSelectedColor = Funcs.makeColour(41,49,70)
+        branding.titleColor = Funcs.makeColour(128,137,160)
+        branding.subtitleColor = Funcs.makeColour(222,222,222)
+        branding.buttonColor = Funcs.makeColour(233,156,55)
+        
+        return branding
+    }
+    
+    func makeDolores() -> WsBranding{
+        let branding = WsBranding()
+        branding.backgroundColor = Funcs.makeColour(231,229,159)
+        branding.backgroundColor2 = Funcs.makeColour(202,170,67)
+        branding.backgroundSelectedColor = Funcs.makeColour(202,170,67)
+        branding.titleColor = Funcs.makeColour(71,97,122)
+        branding.subtitleColor = Funcs.makeColour(42,56,61)
+        branding.buttonColor = Funcs.makeColour(0,0,0)
+        
+        return branding
     }
     
     func setSelectedCurrency(currency : String) {
@@ -121,6 +153,7 @@ class ViewController: UIViewController, NSXMLParserDelegate, UITableViewDataSour
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("RateCell", forIndexPath: indexPath)
+        UIBranding.fixTableViewCell(cell)
         cell.accessoryType = UITableViewCellAccessoryType.DetailButton
         let item = getItem(indexPath)
         cell.textLabel?.text = item.targetCurrency

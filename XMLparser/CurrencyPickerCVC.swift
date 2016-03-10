@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import WsBase
 
 class CurrencyPickerCVC: UICollectionViewController {
     
@@ -26,6 +27,7 @@ class CurrencyPickerCVC: UICollectionViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        UIBranding.fixCollectionView(collectionView!)
         //self.navigationController?.navigationBar.translucent = true
     }
     
@@ -40,10 +42,15 @@ class CurrencyPickerCVC: UICollectionViewController {
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(CurrencyPickerCell.getReuseIdentifier(), forIndexPath: indexPath) as! CurrencyPickerCell
+        
         if let btn = cell.btn {
-            btn.setTitle(parent!.currencyList[indexPath.row], forState: .Normal)
-            if parent!.favourites.contains((btn.titleLabel?.text)!) {
-                cell.backgroundColor = UIColor.redColor()
+            var currency = parent!.currencyList[indexPath.row]
+            btn.setTitle(currency, forState: .Normal)
+            UIBranding.fixButton(btn)
+            if parent!.favourites.contains(currency) {
+                cell.backgroundColor = UIBranding.sharedInstance.branding.backgroundSelectedColor
+            } else {
+                cell.backgroundColor = UIColor.clearColor()
             }
         }
         return cell
