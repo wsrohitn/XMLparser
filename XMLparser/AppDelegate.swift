@@ -7,15 +7,23 @@
 //
 
 import UIKit
+import WsCouchBasic
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-    var window: UIWindow?
-
+    var window: UIWindow?    
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
+        do {
+            try SyncManager.sharedInstance.initialiseDatabase(withSettings: CBSettings.sharedInstance)
+            print("succeeded")
+        } catch {
+            print("failed")
+            print(error)
+        }
+        
         return true
     }
 

@@ -18,19 +18,12 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Pa6-Cr-chE">
-                                <rect key="frame" x="20" y="570" width="560" height="30"/>
-                                <state key="normal" title="Test"/>
-                                <connections>
-                                    <action selector="actionButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Guh-U6-BUx"/>
-                                </connections>
-                            </button>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="tei-FM-QCs">
                                 <rect key="frame" x="20" y="64" width="560" height="488"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="RateCell" textLabel="rKc-e1-wBH" detailTextLabel="Jdj-Dh-fgR" style="IBUITableViewCellStyleValue1" id="kCC-LL-fH1">
-                                        <rect key="frame" x="0.0" y="28" width="560" height="44"/>
+                                        <rect key="frame" x="0.0" y="92" width="560" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="kCC-LL-fH1" id="iMg-Qy-NCW">
                                             <rect key="frame" x="0.0" y="0.0" width="560" height="43"/>
@@ -56,17 +49,38 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
+                            <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6eT-Ms-Gte">
+                                <rect key="frame" x="20" y="570" width="560" height="30"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Pa6-Cr-chE">
+                                        <rect key="frame" x="0.0" y="0.0" width="514" height="30"/>
+                                        <state key="normal" title="Test"/>
+                                        <connections>
+                                            <action selector="actionButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Guh-U6-BUx"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BVn-yu-MWT">
+                                        <rect key="frame" x="514" y="0.0" width="46" height="30"/>
+                                        <state key="normal" title="Button"/>
+                                    </button>
+                                </subviews>
+                            </stackView>
                         </subviews>
-                        <color key="backgroundColor" red="0.74509803921568629" green="0.92156862745098034" blue="0.62352941176470589" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="Pa6-Cr-chE" firstAttribute="top" secondItem="tei-FM-QCs" secondAttribute="bottom" constant="18" id="Hci-94-pyP"/>
-                            <constraint firstItem="Pa6-Cr-chE" firstAttribute="bottom" secondItem="wfy-db-euE" secondAttribute="top" id="ave-iL-qLh"/>
-                            <constraint firstItem="Pa6-Cr-chE" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="dwF-pe-qdw"/>
-                            <constraint firstItem="Pa6-Cr-chE" firstAttribute="leading" secondItem="tei-FM-QCs" secondAttribute="leading" id="mph-LL-xAj"/>
+                            <constraint firstItem="tei-FM-QCs" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="2Qb-Lf-pLn"/>
+                            <constraint firstItem="tei-FM-QCs" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="2Ut-JC-jlU"/>
+                            <constraint firstItem="6eT-Ms-Gte" firstAttribute="top" secondItem="tei-FM-QCs" secondAttribute="bottom" constant="18" id="7BC-cK-Qdx"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="6eT-Ms-Gte" secondAttribute="bottom" id="90P-Ht-OZm"/>
+                            <constraint firstItem="6eT-Ms-Gte" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="I1J-m8-etQ"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="tei-FM-QCs" secondAttribute="trailing" id="Pjg-jD-0Kd"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="6eT-Ms-Gte" secondAttribute="trailing" id="Zbo-Oj-utt"/>
                             <constraint firstItem="tei-FM-QCs" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="p6Y-r4-uFb"/>
-                            <constraint firstItem="Pa6-Cr-chE" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="s3Z-gq-Tk9"/>
-                            <constraint firstItem="Pa6-Cr-chE" firstAttribute="trailing" secondItem="tei-FM-QCs" secondAttribute="trailing" id="zT0-Pw-Yct"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="2Qb-Lf-pLn"/>
+                            </mask>
+                        </variation>
                     </view>
                     <navigationItem key="navigationItem" id="VXn-Rl-wt4"/>
                     <connections>

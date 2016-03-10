@@ -44,7 +44,7 @@ class CurrencyPickerCVC: UICollectionViewController {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(CurrencyPickerCell.getReuseIdentifier(), forIndexPath: indexPath) as! CurrencyPickerCell
         
         if let btn = cell.btn {
-            var currency = parent!.currencyList[indexPath.row]
+            let currency = parent!.currencyList[indexPath.row]
             btn.setTitle(currency, forState: .Normal)
             UIBranding.fixButton(btn)
             if parent!.favourites.contains(currency) {

@@ -8,6 +8,7 @@
 
 import UIKit
 import WsBase
+import WsCouchBasic
 
 protocol CurrencyPickerParent {
     
@@ -18,26 +19,24 @@ protocol CurrencyPickerParent {
     var favourites: [String]{
         get
     }
-
+    
     func setSelectedCurrency(currency : String)
 }
 
 class ViewController: UIViewController, NSXMLParserDelegate, UITableViewDataSource, UITableViewDelegate, CurrencyPickerParent {
-
-    var favourites = [String]()
-    var xmlParser : NSXMLParser?
-    var currentKey = ""
-    var baseCurrency = "GBP"
-    var currencyList = [String]()
-    var currentItem: exchangeRateItem?
-    var myItems = [exchangeRateItem]()
-    var myFavourites = [exchangeRateItem]()
-    var headerFinished = false
-    var header = xmlHeader()
     
     class exchangeRateItem {
         var targetCurrency = ""
         var exchangeRate = ""
+        
+        func makeDict() -> StringKeyDict{
+            var dict = StringKeyDict()
+            
+            dict["targetCurrency"] = targetCurrency
+            dict["exchangeRate"] = exchangeRate
+            
+            return dict
+        }
     }
     
     class xmlHeader {
@@ -47,17 +46,27 @@ class ViewController: UIViewController, NSXMLParserDelegate, UITableViewDataSour
         var link = ""
     }
     
+    var favourites = [String]()
+    var xmlParser : NSXMLParser?
+    var currentKey = ""
+    var baseCurrency = "GBP"
+    var currencyList = [String]()
+    var currentItem: exchangeRateItem?
+    var myItems = [exchangeRateItem]()
+    var myFavourites = [exchangeRateItem]()
+    var headerFinished = false
+    var header = xmlHeader?()
+    
     @IBOutlet weak var myButton: UIButton!
     
     @IBAction func actionButton(sender: UIButton) {
-        UIFuncs.showMessage(self, "Info", "Published Date: \n \(header.pubDate) \n\n URL:\n \(header.link)")
+        UIFuncs.showMessage(self, "Info", "Published Date: \n \(header!.pubDate) \n\n URL:\n \(header!.link)")
         return
     }
     
     override func viewDidLoad() {
-       // self.navigationController?.navigationBar.translucent = false
+        // self.navigationController?.navigationBar.translucent = false
         super.viewDidLoad()
-        
         
         //UIBranding.sharedInstance.branding = makeMustang1944()
         
@@ -79,10 +88,48 @@ class ViewController: UIViewController, NSXMLParserDelegate, UITableViewDataSour
         tableView.delegate = self
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Pick", style: .Plain, target: self, action: "pickCurrency")
         
-        getRates()
+        Login.sharedInstance.setCBSettings( CBSettings.sharedInstance )
+        if Login.sharedInstance.isValid {
+            
+            //SyncManager.sharedInstance.startContinuousReplication(withSettings: CBSettings.sharedInstance)
+            afterLogin()
+        } else {
+            self.view.userInteractionEnabled = false
+            doLogin()
+        }
+        
+        //getRates()
         // Do any additional setup after loading the view, typically from a nib.
     }
     
+    func afterLogin() {
+        
+        CBSettings.sharedInstance.setCredentials( Login.sharedInstance.userName, password : Login.sharedInstance.password )
+        print("afterLogin", CBSettings.sharedInstance.userName, CBSettings.sharedInstance.password )
+        
+        SyncManager.sharedInstance.startContinuousReplication(withSettings: CBSettings.sharedInstance)
+        // CouchBaseChangeCount.clear?!
+        getRates()
+        if let db = SyncManager.sharedInstance.database {
+            print("got ourselves a database")
+        } else {
+            print("no database")
+        }
+    }
+    
+    func doLogin() {
+        LoginAlert.showLoginDialogForParent(self, thenCallback: { (isOK: Bool) in
+            if isOK {
+                self.view.userInteractionEnabled = true
+                
+                self.afterLogin()
+            }
+            else {
+                self.view.userInteractionEnabled = false
+                self.doLogin()
+            }
+        })
+    }
     
     func makeMustang1944() -> WsBranding {
         let branding = WsBranding()
@@ -114,10 +161,10 @@ class ViewController: UIViewController, NSXMLParserDelegate, UITableViewDataSour
         getRates()
     }
     
-    func pickCurrency(){        
+    func pickCurrency(){
         currencyList.sortInPlace()
-        //CurrencyPickerCVC.loadVC(self.storyboard!, nc: self.navigationController!, parent: self)
-        performSegueWithIdentifier("toCurrencyPickerCVC", sender: self)
+        CurrencyPickerCVC.loadVC(self.storyboard!, nc: self.navigationController!, parent: self)
+        //performSegueWithIdentifier("toCurrencyPickerCVC", sender: self)
         print("new currency selected")
     }
     
@@ -167,7 +214,7 @@ class ViewController: UIViewController, NSXMLParserDelegate, UITableViewDataSour
         }
         return myItems[indexPath.row]
     }
-
+    
     func tableView(tableView: UITableView, accessoryButtonTappedForRowWithIndexPath indexPath: NSIndexPath) {
         let item = getItem(indexPath)
         let currency = item.targetCurrency
@@ -213,6 +260,8 @@ class ViewController: UIViewController, NSXMLParserDelegate, UITableViewDataSour
         myFavourites = []
         currencyList = []
         tableView.reloadData()
+        header = xmlHeader()
+        headerFinished = false
         let task = NSURLSession.sharedSession().dataTaskWithRequest(rssUrlRequest) {
             data, response, error in
             self.xmlParser = NSXMLParser(data: data!)
@@ -236,7 +285,9 @@ class ViewController: UIViewController, NSXMLParserDelegate, UITableViewDataSour
         }
         tableView.reloadData()
         title = "\(baseCurrency) against \(currencyList.count) currencies"
+        saveToCouchBase()
     }
+    
     
     func parser(parser: NSXMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String : String]) {
         
@@ -258,12 +309,12 @@ class ViewController: UIViewController, NSXMLParserDelegate, UITableViewDataSour
                     myItems.append(item)
                 }
                 currencyList.append(item.targetCurrency)
-                print(item.targetCurrency, item.exchangeRate, myItems.count)
+                //print(item.targetCurrency, item.exchangeRate, myItems.count)
                 currentItem = nil
             }
         }
     }
-
+    
     func parser(parser: NSXMLParser, foundCharacters string: String) {
         
         let trimmed = string.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
@@ -279,19 +330,53 @@ class ViewController: UIViewController, NSXMLParserDelegate, UITableViewDataSour
         
         if headerFinished == false {
             if currentKey == "pubDate" {
-                print("pubdate")
-                header.pubDate += trimmed
+                header!.pubDate += trimmed
             }
             if currentKey == "lastBuildDate" {
-                header.lastBuildDate += trimmed
+                header!.lastBuildDate += trimmed
                 headerFinished = true
             }
             if currentKey == "link" {
-                header.link += trimmed
+                header!.link += trimmed
             }
             if currentKey == "title" {
-                header.title += trimmed
+                header!.title += trimmed
             }
+        }
+    }
+    
+    func saveToCouchBase(){
+        var dict = StringKeyDict()
+        var array = [StringKeyDict]()
+        
+        for f in myFavourites {
+            array.append(f.makeDict())
+        }
+        
+        dict["createdAt"] = TimeStamper.createLocalTimeStamp()
+        dict["userName"] = CBSettings.sharedInstance.userName
+        dict["baseCurrency"] = baseCurrency
+        //dict["myItems"] = myItems
+        dict["myFavourites"] = array
+        dict["favourites"] = favourites
+        dict["type"] = "exchangeRates"
+        dict["channels"] = ["namesClearance"]
+        
+        if let db = SyncManager.sharedInstance.database {
+            
+            let timeStamp = TimeStamper.createYYYYMMDD_HHMMSS()
+            if let doc = db.documentWithID("ExchangeRates_\(baseCurrency)_\(timeStamp)") {
+              
+                do {
+                    try doc.putProperties(dict)
+                    print("Saved", doc.documentID)
+                } catch {
+                    print(error)
+                }
+            }
+        }
+        else {
+            print("no database")
         }
     }
 }

@@ -1,1 +1,2 @@
 github "whitespace-software/WsBase" ~> 1.0.0
+github "whitespace-software/WsCouchBasic" ~> 1.0.0
