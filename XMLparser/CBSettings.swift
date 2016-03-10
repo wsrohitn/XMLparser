@@ -8,6 +8,7 @@
 
 import Foundation
 import WsCouchBasic
+import WsBase
 
 public protocol CBSettingsProtocol {
     var hostName: String {
@@ -43,17 +44,21 @@ class CBSettings : CBLocalDatabaseSettings, CBReplicationSettings, CBSettingsPro
         print("initialise views for database")
         makeExchangeRatesView(database)
     }
-
+    
     private func makeExchangeRatesView(db: CBLDatabase) {
         let view = db.viewNamed("ExchangeRatesView")
         view.setMapBlock( { (doc, emit) -> Void in
             if let type = doc["type"] as? String where type == "exchangeRates",
-            let baseCurrency = doc["baseCurrency"] as? String,
-            let createdAt = doc["createdAt"] as? String,
+                let baseCurrency = doc["baseCurrency"] as? String,
+                let createdAt = doc["createdAt"] as? String,
                 let userName = doc["userName"] as? String {
-                    emit (createdAt, [userName, baseCurrency])
+                    var dict = StringKeyDict()
+                    dict["userName"] = userName
+                    dict["createdAt"] = createdAt
+                    dict["baseCurrency"] = baseCurrency
+                    emit (createdAt, dict)
             }
-        }, version: "1")
+            }, version: "4")
     }
     
     var filteredPullChannels: [String]? {
