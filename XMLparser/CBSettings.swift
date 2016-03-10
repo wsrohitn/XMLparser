@@ -41,7 +41,7 @@ class CBSettings : CBLocalDatabaseSettings, CBReplicationSettings, CBSettingsPro
     }
     
     func initialiseViews(forDatabase database: CBLDatabase) {
-        print("initialise views for database")
+        print("Initialise views for database")
         makeExchangeRatesView(database)
     }
     
