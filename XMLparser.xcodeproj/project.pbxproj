@@ -13,7 +13,7 @@
 		C71133A71C8ED8220099C7BC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C71133A61C8ED8220099C7BC /* Assets.xcassets */; };
 		C71133AA1C8ED8220099C7BC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C71133A81C8ED8220099C7BC /* LaunchScreen.storyboard */; };
 		C71133B51C8ED8220099C7BC /* XMLparserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C71133B41C8ED8220099C7BC /* XMLparserTests.swift */; };
-		C71133C01C8F18680099C7BC /* CurrencyPickerTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C71133BF1C8F18680099C7BC /* CurrencyPickerTVC.swift */; };
+		C71133C01C8F18680099C7BC /* UsageButtonTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C71133BF1C8F18680099C7BC /* UsageButtonTVC.swift */; };
 		C71133C21C8F24CA0099C7BC /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = C71133C11C8F24CA0099C7BC /* Preferences.swift */; };
 		C721F8991C90236500485886 /* WsBase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C721F8981C90236500485886 /* WsBase.framework */; };
 		C721F89C1C90252A00485886 /* CurrencyPickerCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C721F89B1C90252A00485886 /* CurrencyPickerCVC.swift */; };
@@ -46,7 +46,7 @@
 		C71133B01C8ED8220099C7BC /* XMLparserTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = XMLparserTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C71133B41C8ED8220099C7BC /* XMLparserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XMLparserTests.swift; sourceTree = "<group>"; };
 		C71133B61C8ED8220099C7BC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		C71133BF1C8F18680099C7BC /* CurrencyPickerTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrencyPickerTVC.swift; sourceTree = "<group>"; };
+		C71133BF1C8F18680099C7BC /* UsageButtonTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UsageButtonTVC.swift; sourceTree = "<group>"; };
 		C71133C11C8F24CA0099C7BC /* Preferences.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Preferences.swift; sourceTree = "<group>"; };
 		C721F8981C90236500485886 /* WsBase.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WsBase.framework; path = Carthage/Build/iOS/WsBase.framework; sourceTree = "<group>"; };
 		C721F89B1C90252A00485886 /* CurrencyPickerCVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrencyPickerCVC.swift; sourceTree = "<group>"; };
@@ -108,7 +108,7 @@
 				C71133A61C8ED8220099C7BC /* Assets.xcassets */,
 				C71133A81C8ED8220099C7BC /* LaunchScreen.storyboard */,
 				C71133AB1C8ED8220099C7BC /* Info.plist */,
-				C71133BF1C8F18680099C7BC /* CurrencyPickerTVC.swift */,
+				C71133BF1C8F18680099C7BC /* UsageButtonTVC.swift */,
 				C71133C11C8F24CA0099C7BC /* Preferences.swift */,
 				C721F89B1C90252A00485886 /* CurrencyPickerCVC.swift */,
 				C721F8A11C904AAB00485886 /* CurrencyPickerCell.swift */,
@@ -259,7 +259,7 @@
 				C71133A01C8ED8220099C7BC /* AppDelegate.swift in Sources */,
 				C71133C21C8F24CA0099C7BC /* Preferences.swift in Sources */,
 				C7B94E191C919CB1002A468C /* CBSettings.swift in Sources */,
-				C71133C01C8F18680099C7BC /* CurrencyPickerTVC.swift in Sources */,
+				C71133C01C8F18680099C7BC /* UsageButtonTVC.swift in Sources */,
 				C7B94E161C919905002A468C /* SavedPassword.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

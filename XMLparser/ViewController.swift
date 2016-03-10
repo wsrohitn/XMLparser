@@ -64,6 +64,20 @@ class ViewController: UIViewController, NSXMLParserDelegate, UITableViewDataSour
         return
     }
     
+    
+    // @IBOutlet weak var usageButton: UIButton!
+    
+    @IBAction func usageButtonAction(sender: AnyObject) {
+        performSegueWithIdentifier("toUsageButtonTVC", sender: self)
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "toCurrencyPickerCVC" {
+            let dvc = segue.destinationViewController as! CurrencyPickerCVC
+            dvc.parent = self
+        }
+    }
+    
     override func viewDidLoad() {
         // self.navigationController?.navigationBar.translucent = false
         super.viewDidLoad()
@@ -89,8 +103,7 @@ class ViewController: UIViewController, NSXMLParserDelegate, UITableViewDataSour
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Pick", style: .Plain, target: self, action: "pickCurrency")
         
         Login.sharedInstance.setCBSettings( CBSettings.sharedInstance )
-        if Login.sharedInstance.isValid {
-            
+        if Login.sharedInstance.isValid {            
             //SyncManager.sharedInstance.startContinuousReplication(withSettings: CBSettings.sharedInstance)
             afterLogin()
         } else {
@@ -164,15 +177,7 @@ class ViewController: UIViewController, NSXMLParserDelegate, UITableViewDataSour
     func pickCurrency(){
         currencyList.sortInPlace()
         CurrencyPickerCVC.loadVC(self.storyboard!, nc: self.navigationController!, parent: self)
-        //performSegueWithIdentifier("toCurrencyPickerCVC", sender: self)
         print("new currency selected")
-    }
-    
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "toCurrencyPickerCVC" {
-            let dvc = segue.destinationViewController as! CurrencyPickerCVC
-            dvc.parent = self
-        }
     }
     
     override func didReceiveMemoryWarning() {
@@ -251,6 +256,11 @@ class ViewController: UIViewController, NSXMLParserDelegate, UITableViewDataSour
                 return
             }
         }
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        tableView.contentInset = UIEdgeInsetsZero
     }
     
     func getRates() {
