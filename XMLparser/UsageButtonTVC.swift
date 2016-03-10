@@ -56,13 +56,12 @@ class UsageButtonTVC: UITableViewController, CBLiveQueryObserverDelegate {
     
     func liveQueryObserverHasRows(rows: CBLQueryEnumerator) {
         var items = [UsageRecord]()
-        for row in rows {
-            print(row)
-            if let cbRow = row as? CBLQueryRow {
-                if let values = cbRow.value as? [String] {
-                    let item = UsageRecord(userName: values[0], createdAt: (cbRow.key as? String)!, baseCurrency: values[1])
-                    items.append(item)
-                }
+        for cbRow in rows.rows {
+            print(cbRow)
+            
+            if let dict = cbRow.value as? StringKeyDict {
+                let item = UsageRecord(userName: dict.getString("userName"), createdAt: dict.getString("createdAt"), baseCurrency: dict.getString("baseCurrency"))
+                items.append(item)
             }
         }
         
