@@ -22,14 +22,21 @@
                                 <rect key="frame" x="20" y="570" width="560" height="30"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Pa6-Cr-chE">
-                                        <rect key="frame" x="0.0" y="0.0" width="280" height="30"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="187" height="30"/>
                                         <state key="normal" title="Test"/>
                                         <connections>
                                             <action selector="actionButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Guh-U6-BUx"/>
                                         </connections>
                                     </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="S3W-t7-gIx">
+                                        <rect key="frame" x="187" y="0.0" width="186" height="30"/>
+                                        <state key="normal" title="Refresh"/>
+                                        <connections>
+                                            <action selector="refresh:" destination="BYZ-38-t0r" eventType="touchUpInside" id="6qi-9o-bGg"/>
+                                        </connections>
+                                    </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BVn-yu-MWT">
-                                        <rect key="frame" x="280" y="0.0" width="280" height="30"/>
+                                        <rect key="frame" x="373" y="0.0" width="187" height="30"/>
                                         <state key="normal" title="Usage"/>
                                         <connections>
                                             <action selector="usageButtonAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ngw-Nv-aJM"/>
@@ -72,16 +79,20 @@
                         <constraints>
                             <constraint firstItem="tei-FM-QCs" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="2Qb-Lf-pLn"/>
                             <constraint firstItem="tei-FM-QCs" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="2Ut-JC-jlU"/>
+                            <constraint firstItem="tei-FM-QCs" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="2dg-2S-VPo"/>
                             <constraint firstItem="6eT-Ms-Gte" firstAttribute="top" secondItem="tei-FM-QCs" secondAttribute="bottom" constant="18" id="7BC-cK-Qdx"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="6eT-Ms-Gte" secondAttribute="bottom" id="90P-Ht-OZm"/>
                             <constraint firstItem="6eT-Ms-Gte" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="I1J-m8-etQ"/>
                             <constraint firstAttribute="trailingMargin" secondItem="tei-FM-QCs" secondAttribute="trailing" id="Pjg-jD-0Kd"/>
                             <constraint firstAttribute="trailingMargin" secondItem="6eT-Ms-Gte" secondAttribute="trailing" id="Zbo-Oj-utt"/>
                             <constraint firstItem="tei-FM-QCs" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="p6Y-r4-uFb"/>
+                            <constraint firstAttribute="trailing" secondItem="tei-FM-QCs" secondAttribute="trailing" id="zlG-32-7X2"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
                                 <exclude reference="2Qb-Lf-pLn"/>
+                                <exclude reference="2Ut-JC-jlU"/>
+                                <exclude reference="Pjg-jD-0Kd"/>
                             </mask>
                         </variation>
                     </view>

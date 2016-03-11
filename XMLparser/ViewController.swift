@@ -65,6 +65,9 @@ class ViewController: UIViewController, NSXMLParserDelegate, UITableViewDataSour
     }
     
     
+    @IBAction func refresh(sender: AnyObject) {
+        getRates()
+    }
     // @IBOutlet weak var usageButton: UIButton!
     
     @IBAction func usageButtonAction(sender: AnyObject) {
@@ -274,15 +277,20 @@ class ViewController: UIViewController, NSXMLParserDelegate, UITableViewDataSour
         headerFinished = false
         let task = NSURLSession.sharedSession().dataTaskWithRequest(rssUrlRequest) {
             data, response, error in
-            self.xmlParser = NSXMLParser(data: data!)
-            self.xmlParser!.delegate = self
-            self.xmlParser!.parse()
-            print(self.myItems.count, "exchange rates")
-            dispatch_async(dispatch_get_main_queue()){
-                self.afterLoad()
+            if error?.code == NSURLErrorNotConnectedToInternet {
+                dispatch_async(dispatch_get_main_queue()){
+                    UIFuncs.showMessage(self, "Error", "Not connected to the internet")
+                }
+            } else {
+                self.xmlParser = NSXMLParser(data: data!)
+                self.xmlParser!.delegate = self
+                self.xmlParser!.parse()
+                print(self.myItems.count, "exchange rates")
+                dispatch_async(dispatch_get_main_queue()){
+                    self.afterLoad()
+                }
             }
         }
-        
         task.resume()
     }
     
@@ -319,7 +327,6 @@ class ViewController: UIViewController, NSXMLParserDelegate, UITableViewDataSour
                     myItems.append(item)
                 }
                 currencyList.append(item.targetCurrency)
-                //print(item.targetCurrency, item.exchangeRate, myItems.count)
                 currentItem = nil
             }
         }
@@ -370,7 +377,7 @@ class ViewController: UIViewController, NSXMLParserDelegate, UITableViewDataSour
         dict["myFavourites"] = array
         dict["favourites"] = favourites
         dict["type"] = "exchangeRates"
-        dict["channels"] = ["namesClearance"]
+        dict["channels"] = ["exchangeRates"]
         
         if let db = SyncManager.sharedInstance.database {
             
