@@ -137,13 +137,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         }
         return myItems.count
     }
-    
-    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        if section == 0 {
-            return "\(myFavourites.count) Favourites"
-        }
-        return "\(myItems.count) Others"
-    }
+
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("RateCell", forIndexPath: indexPath)
@@ -199,6 +193,33 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                 return
             }
         }
+    }
+    
+    let HEADER_HEIGHT = CGFloat(44)
+    
+    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let view = UIView(frame: CGRectMake(0, 0, tableView.frame.width, HEADER_HEIGHT))
+        view.backgroundColor = UIBranding.sharedInstance.branding.sectionHeaderBackgroundColor
+        let gap = CGFloat(6)
+        let label = UILabel(frame: CGRectMake(10, gap, tableView.frame.width - 20, HEADER_HEIGHT - 2 * gap))
+        if let str = self.tableView(tableView, titleForHeaderInSection: section) {
+            label.text = str
+        }
+        label.textColor = UIBranding.sharedInstance.branding.sectionHeaderTextColor
+        view.addSubview(label)
+        return view
+    }
+    
+    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return HEADER_HEIGHT
+    }
+    
+    
+    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if section == 0 {
+            return "\(myFavourites.count) Favourites"
+        }
+        return "\(myItems.count) Others"
     }
     
     override func viewDidLayoutSubviews() {

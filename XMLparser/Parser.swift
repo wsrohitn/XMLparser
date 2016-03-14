@@ -9,8 +9,6 @@
 import Foundation
 import WsBase
 
-
-
 class Parser: NSObject, NSXMLParserDelegate {
     
     var xmlParser : NSXMLParser?
