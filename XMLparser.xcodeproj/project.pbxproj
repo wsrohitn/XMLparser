@@ -18,11 +18,15 @@
 		C721F8991C90236500485886 /* WsBase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C721F8981C90236500485886 /* WsBase.framework */; };
 		C721F89C1C90252A00485886 /* CurrencyPickerCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C721F89B1C90252A00485886 /* CurrencyPickerCVC.swift */; };
 		C721F8A21C904AAB00485886 /* CurrencyPickerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C721F8A11C904AAB00485886 /* CurrencyPickerCell.swift */; };
+		C767B5C51C96CC6600498884 /* ExchangeRateItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C767B5C41C96CC6600498884 /* ExchangeRateItem.swift */; };
+		C767B5C71C96CCEB00498884 /* ExchangeRateHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C767B5C61C96CCEB00498884 /* ExchangeRateHeader.swift */; };
 		C7B94E101C9194CE002A468C /* WsCouchBasic.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C7B94E0F1C9194CE002A468C /* WsCouchBasic.framework */; };
 		C7B94E121C91988C002A468C /* Login.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7B94E111C91988C002A468C /* Login.swift */; };
 		C7B94E141C9198BE002A468C /* LoginAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7B94E131C9198BE002A468C /* LoginAlert.swift */; };
 		C7B94E161C919905002A468C /* SavedPassword.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7B94E151C919905002A468C /* SavedPassword.swift */; };
 		C7B94E191C919CB1002A468C /* CBSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7B94E181C919CB1002A468C /* CBSettings.swift */; };
+		C7EABFDA1C9305E30034E3F9 /* ColorSchemes.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7EABFD91C9305E30034E3F9 /* ColorSchemes.swift */; };
+		C7EABFDC1C9310AB0034E3F9 /* Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7EABFDB1C9310AB0034E3F9 /* Parser.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,7 +40,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		C711339C1C8ED8220099C7BC /* XMLparser.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = XMLparser.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C711339C1C8ED8220099C7BC /* ExchangeRates.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ExchangeRates.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C711339F1C8ED8220099C7BC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C71133A11C8ED8220099C7BC /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		C71133A41C8ED8220099C7BC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -51,12 +55,16 @@
 		C721F8981C90236500485886 /* WsBase.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WsBase.framework; path = Carthage/Build/iOS/WsBase.framework; sourceTree = "<group>"; };
 		C721F89B1C90252A00485886 /* CurrencyPickerCVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrencyPickerCVC.swift; sourceTree = "<group>"; };
 		C721F8A11C904AAB00485886 /* CurrencyPickerCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrencyPickerCell.swift; sourceTree = "<group>"; };
+		C767B5C41C96CC6600498884 /* ExchangeRateItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExchangeRateItem.swift; sourceTree = "<group>"; };
+		C767B5C61C96CCEB00498884 /* ExchangeRateHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExchangeRateHeader.swift; sourceTree = "<group>"; };
 		C7B94E0F1C9194CE002A468C /* WsCouchBasic.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WsCouchBasic.framework; path = Carthage/Build/iOS/WsCouchBasic.framework; sourceTree = "<group>"; };
 		C7B94E111C91988C002A468C /* Login.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Login.swift; sourceTree = "<group>"; };
 		C7B94E131C9198BE002A468C /* LoginAlert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginAlert.swift; sourceTree = "<group>"; };
 		C7B94E151C919905002A468C /* SavedPassword.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SavedPassword.swift; sourceTree = "<group>"; };
 		C7B94E171C919955002A468C /* BridgingHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BridgingHeader.h; sourceTree = "<group>"; };
 		C7B94E181C919CB1002A468C /* CBSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CBSettings.swift; sourceTree = "<group>"; };
+		C7EABFD91C9305E30034E3F9 /* ColorSchemes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorSchemes.swift; sourceTree = "<group>"; };
+		C7EABFDB1C9310AB0034E3F9 /* Parser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Parser.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -93,7 +101,7 @@
 		C711339D1C8ED8220099C7BC /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				C711339C1C8ED8220099C7BC /* XMLparser.app */,
+				C711339C1C8ED8220099C7BC /* ExchangeRates.app */,
 				C71133B01C8ED8220099C7BC /* XMLparserTests.xctest */,
 			);
 			name = Products;
@@ -117,6 +125,10 @@
 				C7B94E151C919905002A468C /* SavedPassword.swift */,
 				C7B94E171C919955002A468C /* BridgingHeader.h */,
 				C7B94E181C919CB1002A468C /* CBSettings.swift */,
+				C7EABFD91C9305E30034E3F9 /* ColorSchemes.swift */,
+				C7EABFDB1C9310AB0034E3F9 /* Parser.swift */,
+				C767B5C41C96CC6600498884 /* ExchangeRateItem.swift */,
+				C767B5C61C96CCEB00498884 /* ExchangeRateHeader.swift */,
 			);
 			path = XMLparser;
 			sourceTree = "<group>";
@@ -148,7 +160,7 @@
 			);
 			name = XMLparser;
 			productName = XMLparser;
-			productReference = C711339C1C8ED8220099C7BC /* XMLparser.app */;
+			productReference = C711339C1C8ED8220099C7BC /* ExchangeRates.app */;
 			productType = "com.apple.product-type.application";
 		};
 		C71133AF1C8ED8220099C7BC /* XMLparserTests */ = {
@@ -255,9 +267,13 @@
 				C721F8A21C904AAB00485886 /* CurrencyPickerCell.swift in Sources */,
 				C71133A21C8ED8220099C7BC /* ViewController.swift in Sources */,
 				C721F89C1C90252A00485886 /* CurrencyPickerCVC.swift in Sources */,
+				C7EABFDA1C9305E30034E3F9 /* ColorSchemes.swift in Sources */,
 				C7B94E141C9198BE002A468C /* LoginAlert.swift in Sources */,
 				C71133A01C8ED8220099C7BC /* AppDelegate.swift in Sources */,
 				C71133C21C8F24CA0099C7BC /* Preferences.swift in Sources */,
+				C7EABFDC1C9310AB0034E3F9 /* Parser.swift in Sources */,
+				C767B5C71C96CCEB00498884 /* ExchangeRateHeader.swift in Sources */,
+				C767B5C51C96CC6600498884 /* ExchangeRateItem.swift in Sources */,
 				C7B94E191C919CB1002A468C /* CBSettings.swift in Sources */,
 				C71133C01C8F18680099C7BC /* UsageButtonTVC.swift in Sources */,
 				C7B94E161C919905002A468C /* SavedPassword.swift in Sources */,
@@ -396,7 +412,7 @@
 				INFOPLIST_FILE = XMLparser/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = Whitespace.XMLparser;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = ExchangeRates;
 				SWIFT_OBJC_BRIDGING_HEADER = ./XMLparser/BridgingHeader.h;
 			};
 			name = Debug;
@@ -412,7 +428,7 @@
 				INFOPLIST_FILE = XMLparser/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = Whitespace.XMLparser;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = ExchangeRates;
 				SWIFT_OBJC_BRIDGING_HEADER = ./XMLparser/BridgingHeader.h;
 			};
 			name = Release;

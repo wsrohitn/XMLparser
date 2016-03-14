@@ -50,6 +50,7 @@ class Login {
         let res = NSData(bytes: hash, length: Int(CC_SHA256_DIGEST_LENGTH))
         return res
     }
+    
     private class func createHash(s: String) -> String {
         if s.isEmpty {
             return s

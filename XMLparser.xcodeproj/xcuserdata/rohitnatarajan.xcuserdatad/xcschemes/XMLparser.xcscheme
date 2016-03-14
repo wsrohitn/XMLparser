@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "C711339B1C8ED8220099C7BC"
-               BuildableName = "XMLparser.app"
+               BuildableName = "ExchangeRates.app"
                BlueprintName = "XMLparser"
                ReferencedContainer = "container:XMLparser.xcodeproj">
             </BuildableReference>
@@ -43,7 +43,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "C711339B1C8ED8220099C7BC"
-            BuildableName = "XMLparser.app"
+            BuildableName = "ExchangeRates.app"
             BlueprintName = "XMLparser"
             ReferencedContainer = "container:XMLparser.xcodeproj">
          </BuildableReference>
@@ -66,7 +66,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "C711339B1C8ED8220099C7BC"
-            BuildableName = "XMLparser.app"
+            BuildableName = "ExchangeRates.app"
             BlueprintName = "XMLparser"
             ReferencedContainer = "container:XMLparser.xcodeproj">
          </BuildableReference>
@@ -85,7 +85,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "C711339B1C8ED8220099C7BC"
-            BuildableName = "XMLparser.app"
+            BuildableName = "ExchangeRates.app"
             BlueprintName = "XMLparser"
             ReferencedContainer = "container:XMLparser.xcodeproj">
          </BuildableReference>

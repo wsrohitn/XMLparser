@@ -23,53 +23,24 @@ protocol CurrencyPickerParent {
     func setSelectedCurrency(currency : String)
 }
 
-class ViewController: UIViewController, NSXMLParserDelegate, UITableViewDataSource, UITableViewDelegate, CurrencyPickerParent {
-    
-    class exchangeRateItem {
-        var targetCurrency = ""
-        var exchangeRate = ""
-        
-        func makeDict() -> StringKeyDict{
-            var dict = StringKeyDict()
-            
-            dict["targetCurrency"] = targetCurrency
-            dict["exchangeRate"] = exchangeRate
-            
-            return dict
-        }
-    }
-    
-    class xmlHeader {
-        var pubDate = ""
-        var lastBuildDate = ""
-        var title = ""
-        var link = ""
-    }
-    
-    var favourites = [String]()
-    var xmlParser : NSXMLParser?
-    var currentKey = ""
+class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, CurrencyPickerParent {
+
     var baseCurrency = "GBP"
     var currencyList = [String]()
-    var currentItem: exchangeRateItem?
-    var myItems = [exchangeRateItem]()
-    var myFavourites = [exchangeRateItem]()
-    var headerFinished = false
-    var header = xmlHeader?()
+    var myFavourites = [ExchangeRateItem]()
+    var actionMessage = "Not filled in yet."
+    var favourites = [String]()
+    var myItems = [ExchangeRateItem]()
     
+    @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var myButton: UIButton!
-    
     @IBAction func actionButton(sender: UIButton) {
-        UIFuncs.showMessage(self, "Info", "Published Date: \n \(header!.pubDate) \n\n URL:\n \(header!.link)")
+        UIFuncs.showMessage(self, "Info", actionMessage)
         return
     }
-    
-    
     @IBAction func refresh(sender: AnyObject) {
         getRates()
-    }
-    // @IBOutlet weak var usageButton: UIButton!
-    
+    }    
     @IBAction func usageButtonAction(sender: AnyObject) {
         performSegueWithIdentifier("toUsageButtonTVC", sender: self)
     }
@@ -82,10 +53,7 @@ class ViewController: UIViewController, NSXMLParserDelegate, UITableViewDataSour
     }
     
     override func viewDidLoad() {
-        // self.navigationController?.navigationBar.translucent = false
         super.viewDidLoad()
-        
-        //UIBranding.sharedInstance.branding = makeMustang1944()
         
         UIBranding.fixView(self.view!)
         UIBranding.fixTableView(tableView)
@@ -107,15 +75,11 @@ class ViewController: UIViewController, NSXMLParserDelegate, UITableViewDataSour
         
         Login.sharedInstance.setCBSettings( CBSettings.sharedInstance )
         if Login.sharedInstance.isValid {            
-            //SyncManager.sharedInstance.startContinuousReplication(withSettings: CBSettings.sharedInstance)
             afterLogin()
         } else {
             self.view.userInteractionEnabled = false
             doLogin()
         }
-        
-        //getRates()
-        // Do any additional setup after loading the view, typically from a nib.
     }
     
     func afterLogin() {
@@ -124,7 +88,6 @@ class ViewController: UIViewController, NSXMLParserDelegate, UITableViewDataSour
         print("afterLogin", CBSettings.sharedInstance.userName, CBSettings.sharedInstance.password )
         
         SyncManager.sharedInstance.startContinuousReplication(withSettings: CBSettings.sharedInstance)
-        // CouchBaseChangeCount.clear?!
         getRates()
         if let db = SyncManager.sharedInstance.database {
             print("got ourselves a database")
@@ -147,30 +110,6 @@ class ViewController: UIViewController, NSXMLParserDelegate, UITableViewDataSour
         })
     }
     
-    func makeMustang1944() -> WsBranding {
-        let branding = WsBranding()
-        branding.backgroundColor = Funcs.makeColour(38,38,38)
-        branding.backgroundColor2 = Funcs.makeColour(41,49,70)
-        branding.backgroundSelectedColor = Funcs.makeColour(41,49,70)
-        branding.titleColor = Funcs.makeColour(128,137,160)
-        branding.subtitleColor = Funcs.makeColour(222,222,222)
-        branding.buttonColor = Funcs.makeColour(233,156,55)
-        
-        return branding
-    }
-    
-    func makeDolores() -> WsBranding{
-        let branding = WsBranding()
-        branding.backgroundColor = Funcs.makeColour(231,229,159)
-        branding.backgroundColor2 = Funcs.makeColour(202,170,67)
-        branding.backgroundSelectedColor = Funcs.makeColour(202,170,67)
-        branding.titleColor = Funcs.makeColour(71,97,122)
-        branding.subtitleColor = Funcs.makeColour(42,56,61)
-        branding.buttonColor = Funcs.makeColour(0,0,0)
-        
-        return branding
-    }
-    
     func setSelectedCurrency(currency : String) {
         baseCurrency = currency
         Preferences.writeString(Preferences.Id.baseCurrency, value: baseCurrency)
@@ -178,6 +117,7 @@ class ViewController: UIViewController, NSXMLParserDelegate, UITableViewDataSour
     }
     
     func pickCurrency(){
+        print("sorting currency list")
         currencyList.sortInPlace()
         CurrencyPickerCVC.loadVC(self.storyboard!, nc: self.navigationController!, parent: self)
         print("new currency selected")
@@ -185,7 +125,6 @@ class ViewController: UIViewController, NSXMLParserDelegate, UITableViewDataSour
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -216,7 +155,7 @@ class ViewController: UIViewController, NSXMLParserDelegate, UITableViewDataSour
         return cell
     }
     
-    func getItem(indexPath: NSIndexPath) -> exchangeRateItem {
+    func getItem(indexPath: NSIndexPath) -> ExchangeRateItem {
         if indexPath.section == 0 {
             return myFavourites[indexPath.row]
         }
@@ -256,6 +195,7 @@ class ViewController: UIViewController, NSXMLParserDelegate, UITableViewDataSour
             if item.targetCurrency == currency {
                 myFavourites.removeAtIndex(index)
                 myItems.append(item)
+                sortMyItems()
                 return
             }
         }
@@ -269,12 +209,6 @@ class ViewController: UIViewController, NSXMLParserDelegate, UITableViewDataSour
     func getRates() {
         let urlString = NSURL(string: "http://www.floatrates.com/daily/\(baseCurrency).xml")
         let rssUrlRequest:NSURLRequest = NSURLRequest(URL:urlString!)
-        myItems = []
-        myFavourites = []
-        currencyList = []
-        tableView.reloadData()
-        header = xmlHeader()
-        headerFinished = false
         let task = NSURLSession.sharedSession().dataTaskWithRequest(rssUrlRequest) {
             data, response, error in
             if error?.code == NSURLErrorNotConnectedToInternet {
@@ -282,84 +216,43 @@ class ViewController: UIViewController, NSXMLParserDelegate, UITableViewDataSour
                     UIFuncs.showMessage(self, "Error", "Not connected to the internet")
                 }
             } else {
-                self.xmlParser = NSXMLParser(data: data!)
-                self.xmlParser!.delegate = self
-                self.xmlParser!.parse()
-                print(self.myItems.count, "exchange rates")
+                let p = Parser.make(data!)
                 dispatch_async(dispatch_get_main_queue()){
-                    self.afterLoad()
+                    print(p.myItems.count, "items in p")
+                    self.afterLoad(p.myItems, header: p.header)
                 }
             }
         }
         task.resume()
     }
     
-    func afterLoad() {
+    func sortMyItems() {
         myItems.sortInPlace {
             $0.targetCurrency < $1.targetCurrency
         }
         myFavourites.sortInPlace {
             $0.targetCurrency < $1.targetCurrency
         }
+    }
+    
+    func afterLoad(items: [ExchangeRateItem], header: ExchangeRateHeader) {
+        myItems = []
+        myFavourites = []
+        currencyList = []
+        actionMessage = "\(header.pubDate), \(header.link)"
+        for item in items {
+            currencyList.append(item.targetCurrency)
+            if favourites.contains(item.targetCurrency) {
+                myFavourites.append(item)
+            } else {
+                myItems.append(item)
+            }
+        }
+        
+        sortMyItems()
         tableView.reloadData()
         title = "\(baseCurrency) against \(currencyList.count) currencies"
         saveToCouchBase()
-    }
-    
-    
-    func parser(parser: NSXMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String : String]) {
-        
-        currentKey = elementName
-        if currentKey == "item" {
-            currentItem = exchangeRateItem()
-        }
-    }
-    
-    @IBOutlet weak var tableView: UITableView!
-    func parser(parser: NSXMLParser, didEndElement elementName: String, namespaceURI: String?, qualifiedName qName: String?) {
-        
-        if elementName == "item" {
-            if let item = currentItem {
-                if favourites.contains(item.targetCurrency) {
-                    myFavourites.append(item)
-                }
-                else {
-                    myItems.append(item)
-                }
-                currencyList.append(item.targetCurrency)
-                currentItem = nil
-            }
-        }
-    }
-    
-    func parser(parser: NSXMLParser, foundCharacters string: String) {
-        
-        let trimmed = string.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
-        if let item = currentItem {
-            if currentKey == "targetCurrency" {
-                item.targetCurrency += trimmed
-            }
-            
-            if currentKey == "exchangeRate" {
-                item.exchangeRate += trimmed
-            }
-        }
-        
-        if headerFinished == false {
-            if currentKey == "pubDate" {
-                header!.pubDate += trimmed
-            }
-            if currentKey == "lastBuildDate" {
-                header!.lastBuildDate += trimmed
-                headerFinished = true
-            }
-            if currentKey == "link" {
-                header!.link += trimmed
-            }
-            if currentKey == "title" {
-                header!.title += trimmed
-            }
-        }
     }
     
     func saveToCouchBase(){
@@ -373,7 +266,6 @@ class ViewController: UIViewController, NSXMLParserDelegate, UITableViewDataSour
         dict["createdAt"] = TimeStamper.createLocalTimeStamp()
         dict["userName"] = CBSettings.sharedInstance.userName
         dict["baseCurrency"] = baseCurrency
-        //dict["myItems"] = myItems
         dict["myFavourites"] = array
         dict["favourites"] = favourites
         dict["type"] = "exchangeRates"
